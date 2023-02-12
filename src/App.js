@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import SignIn from "./components/SignIn";
+import { Routes, Route } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { Container, Box } from "@mui/material";
+import { Stack } from "@mui/system";
+import { Home } from "./components/Home";
+import SignUp from "./components/SignUp"; 
+import { UserAuthContextProvider } from "./context/UserAuthContext";
+import { Welcome } from "./components/Welcome";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Container  maxWidth={false} disableGutters>
+        <Stack>
+        <UserAuthContextProvider>
+        <Routes>
+              <Route
+                path="/home"
+                element={
+                  <ProtectedRoute>
+                    <Home/>
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/signin" element={<SignIn/>} />
+              <Route path="/signup" element={<SignUp/>} />
+              <Route path="/" element={<Welcome/>} />
+            </Routes>
+          </UserAuthContextProvider>
+        </Stack>
+      </Container>
   );
 }
 
